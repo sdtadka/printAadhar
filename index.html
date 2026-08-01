@@ -784,7 +784,7 @@
         <div class="brand"><i class="fas fa-id-card"></i> Print <span>Aadhaar</span></div>
         <div class="marquee">
             <marquee behavior="scroll" direction="left" scrollamount="4">
-                Welcome to Print Your Aadhaar Portal | Fast, Secure &amp; Verified UID Services
+                Welcome to Print Aadhaar Portal | Fast, Secure &amp; Verified UID Services
             </marquee>
         </div>
         <div class="user-area">
@@ -984,9 +984,9 @@
 
     <!-- FOOTER -->
     <div class="footer">
-        &copy; 2026 Print Your Aadhaar | All rights reserved.
+        &copy; 2026 Print Aadhaar | All rights reserved.
         <a href="#">About</a> | <a href="#">Contact</a>
-        <br><small style="color:#94a3b8;">Unlimited UID Institute – A verified identity platform</small>
+        <br><small style="color:#94a3b8;"> Print Aadhar – A verified identity platform</small>
     </div>
 </div>
 
@@ -1021,6 +1021,7 @@
 (function() {
     'use strict';
 
+    // ===== IMPORTANT: Replace with your Apps Script Web App URL =====
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5WkBaO9h6_Wskewau9eusnPXtB_EGGGTtcoerV4sM0SlxQPhYBYomseiH8_byr7qBJw/exec';
 
     let currentUser = null;
@@ -1171,16 +1172,12 @@
     function showAuthError(el, msg) { el.textContent = msg; el.className = 'error-msg'; }
     function showAuthSuccess(el, msg) { el.textContent = msg; el.className = 'success-msg'; }
 
-    // ========== API CALL – FIXED FOR CORS ==========
+    // ========== API CALL – FIXED: headers removed ==========
     async function apiCall(action, payload = {}) {
         try {
             const resp = await fetch(SCRIPT_URL, {
                 method: 'POST',
-                mode: 'cors',
-                credentials: 'omit',
-                cache: 'no-cache',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action, ...payload }),
+                body: JSON.stringify({ action, ...payload })
             });
             if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
             return await resp.json();
@@ -1967,8 +1964,9 @@
     });
 
     // ========== INIT ==========
-    if (!SCRIPT_URL) {
-        console.warn('⚠️ SCRIPT_URL is not set. Please set your Apps Script deployment URL.');
+    console.log('💡 SCRIPT_URL:', SCRIPT_URL);
+    if (SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
+        console.warn('⚠️ Please replace SCRIPT_URL with your Apps Script Web App URL.');
     }
 
 })();
