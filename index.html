@@ -694,7 +694,7 @@
 ============================================================ -->
 <div id="authBlock">
     <div class="auth-card" id="authCard">
-        <div class="brand">Print  <span>Aadhaar</span></div>
+        <div class="brand">Print Your <span>Aadhaar</span></div>
         <div class="subtitle" id="authSubtitle">Login to your account</div>
 
         <!-- LOGIN -->
@@ -784,7 +784,7 @@
         <div class="brand"><i class="fas fa-id-card"></i> Print <span>Aadhaar</span></div>
         <div class="marquee">
             <marquee behavior="scroll" direction="left" scrollamount="4">
-                Welcome to Print Aadhaar Portal | Fast, Secure &amp; Verified UID Services
+                Welcome to Print Your Aadhaar Portal | Fast, Secure &amp; Verified UID Services
             </marquee>
         </div>
         <div class="user-area">
@@ -946,7 +946,7 @@
                         <div class="result-header">
                             <div class="tick">✓</div>
                             <div class="uid-number" id="resultUid">—</div>
-                            <div class="status-badge">Aadhar Verification Completed</div>
+                            <div class="status-badge">Verification Completed</div>
                         </div>
 
                         <div class="section-title">Personal Details</div>
@@ -984,9 +984,9 @@
 
     <!-- FOOTER -->
     <div class="footer">
-        &copy; 2026 Print Aadhaar | All rights reserved.
+        &copy; 2026 Print Your Aadhaar | All rights reserved.
         <a href="#">About</a> | <a href="#">Contact</a>
-        <br><small style="color:#94a3b8;">Print Aadhar – A verified identity platform</small>
+        <br><small style="color:#94a3b8;">Unlimited UID Institute – A verified identity platform</small>
     </div>
 </div>
 
@@ -1171,13 +1171,18 @@
     function showAuthError(el, msg) { el.textContent = msg; el.className = 'error-msg'; }
     function showAuthSuccess(el, msg) { el.textContent = msg; el.className = 'success-msg'; }
 
+    // ========== API CALL – FIXED FOR CORS ==========
     async function apiCall(action, payload = {}) {
         try {
             const resp = await fetch(SCRIPT_URL, {
                 method: 'POST',
+                mode: 'cors',
+                credentials: 'omit',
+                cache: 'no-cache',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ action, ...payload }),
             });
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
             return await resp.json();
         } catch (err) {
             console.error('API Error:', err);
@@ -1199,7 +1204,6 @@
         return interval;
     }
 
-    // ===== FIXED: Just pass through, backend already gives DD-MM-YYYY =====
     function formatDateToDDMMYYYY(dateStr) {
         return dateStr || '—';
     }
@@ -1525,7 +1529,7 @@
         });
     });
 
-    // ========== MENU TOGGLE (Hamburger) ==========
+    // ========== MENU TOGGLE ==========
     menuToggle.addEventListener('click', function() {
         dashSidebar.classList.toggle('mobile-open');
     });
@@ -1969,6 +1973,5 @@
 
 })();
 </script>
-
 </body>
 </html>
